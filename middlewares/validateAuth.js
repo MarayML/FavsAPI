@@ -1,20 +1,15 @@
 const jwt = require('jsonwebtoken');
-const { jwtSecret } = require('../../config');
-const Boom = require('@hapi/boom');
+const { jwtKey } = require('../config');
 
 module.exports = (req, res, next) => {
     try {
-        //console.log("auth middleware")
         const token = req.headers['authorization']
             ? req.headers['authorization'].replace('Bearer ', '')
             : undefined;
-        //console.log(token);
-        const decodedToken = jwt.verify(token, jwtSecret);
+        const decodedToken = jwt.verify(token, jwtKey);
         req.userData = decodedToken;
-        //console.log(req.userData)
         next();
     } catch (error) {
-        console.log(error)
-        res.send(Boom.forbidden(`Unauthorized`));
+        res.status(401).json({ success: false, message: 'Unauthorized'});
     }
 };
