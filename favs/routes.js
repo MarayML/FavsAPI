@@ -9,8 +9,8 @@ const {
     deleteList,
 } = require('./controller');
 
-router.get('/api/favs', validateAuth, addList);
-router.put('/api/favs/:id', validateAuth, getList);
+router.post('/api/favs', validateAuth, addList);
+router.get('/api/favs/:id', validateAuth, getList);
 router.get('/api/favs', validateAuth, getAllLists);
 router.delete('/api/favs/:id', validateAuth, deleteList);
 

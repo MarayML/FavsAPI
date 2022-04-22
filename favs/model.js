@@ -11,12 +11,12 @@ const FavSchema = new Schema(
 
 const schema = new Schema(
     {
-        owner: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
+        user: { type: Schema.Types.ObjectId, required: true, ref: 'users' },
         name: { type: String, required: true },
         favs: [{ type: FavSchema }],
     },
     { timestamps: true }
 );
 
-const favsModel = mongoose.model('favs', schema);
-module.exports = favsModel;
+const FavsModel = mongoose.model('favs', schema);
+module.exports = FavsModel;

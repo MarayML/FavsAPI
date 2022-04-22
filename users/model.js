@@ -9,5 +9,5 @@ const schema = new Schema(
     { timestamps: true }
 );
 
-const usersModel = mongoose.model('users', schema);
-module.exports = usersModel;
+const UsersModel = mongoose.model('users', schema);
+module.exports = UsersModel;

@@ -1,7 +1,7 @@
-const { hash, compare } = require("bcrypt");
+const { hash, compare } = require("bcryptjs");
 
 const encryptPassword = async (password) => {
-  return await hash(this.password, 10);
+  return await hash(password, 10);
 };
 
 const comparePassword = async (passwordClient, encryptedPassword) => {

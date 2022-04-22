@@ -1,6 +1,6 @@
 
 const jwt = require('jsonwebtoken');
-const { usersModel } = require('./model');
+const UsersModel = require('./model');
 const { encryptPassword, comparePassword } = require('../utils');
 const { jwtKey } = require('../config');
 
@@ -9,7 +9,7 @@ module.exports = {
     try {
       const { email, password } = req.body;
       const encryptedPassword = await encryptPassword(password);
-      const newUser = new usersModel({ email, password: encryptedPassword });
+      const newUser = new UsersModel({ email, password: encryptedPassword });
       await newUser.save();
       res.status(201).json({ success: true, data: user });
     } catch (error) {
@@ -17,12 +17,13 @@ module.exports = {
     }
   },
   signIn: async (req, res) => {
+    console.log(req.body);
     const { email, password } = req.body;
-    const user = await usersModel.findOne({ email });
+    const user = await UsersModel.findOne({ email });
     if (!user) {
       res.status(404).json({ success: false, message: 'Usuario no registrado' });
     } else {
-      const isVerifyPassword = await comparePassword(password, userFound.password);
+      const isVerifyPassword = await comparePassword(password, user.password);
       if (!isVerifyPassword) {
         res.status(401).json({ success: false, message: 'Contraseña invalida' });
       } else {
