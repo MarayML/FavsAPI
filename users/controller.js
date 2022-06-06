@@ -11,13 +11,12 @@ module.exports = {
       const encryptedPassword = await encryptPassword(password);
       const newUser = new UsersModel({ email, password: encryptedPassword });
       await newUser.save();
-      res.status(201).json({ success: true, data: user });
+      res.status(201).json({ success: true, data: newUser });
     } catch (error) {
-      res.send(error.message);
+      res.send(error);
     }
   },
   signIn: async (req, res) => {
-    console.log(req.body);
     const { email, password } = req.body;
     const user = await UsersModel.findOne({ email });
     if (!user) {
@@ -27,7 +26,7 @@ module.exports = {
       if (!isVerifyPassword) {
         res.status(401).json({ success: false, message: 'Contraseña invalida' });
       } else {
-        const token = jwt.sign(JSON.stringify(user), jwtKey);
+        const token = jwt.sign(JSON.stringify(user), 'makeitreal');
         res.status(200).json({ success: true, data: user, meta: { token }, message: 'Bienvenido'});
       }
     }

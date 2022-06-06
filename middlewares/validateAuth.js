@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
         const token = req.headers['authorization']
             ? req.headers['authorization'].replace('Bearer ', '')
             : undefined;
-        const decodedToken = jwt.verify(token, jwtKey);
+        const decodedToken = jwt.verify(token, 'makeitreal');
         req.userData = decodedToken;
         next();
     } catch (error) {
